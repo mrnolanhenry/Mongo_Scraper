@@ -55,7 +55,7 @@ app.get("/scrape", function(req, res) {
       db.Article.create(result)
         .then(function(dbArticle) {
           // View the added result in the console
-          console.log(dbArticle);
+          // console.log(dbArticle);
         })
         .catch(function(err) {
           // If an error occurred, log it
@@ -103,11 +103,13 @@ app.get("/articles/starred", function(req, res) {
 
 // Route for grabbing a specific Article by id, populate it with it's note
 app.get("/articles/:id", function(req, res) {
+  // console.log("req.params.id",req.params.id);
   // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
   db.Article.findOne({ _id: req.params.id })
     // ..and populate all of the notes associated with it
     .populate("note")
     .then(function(dbArticle) {
+      // console.log("dbArticle",dbArticle);
       // If we were able to successfully find an Article with the given id, send it back to the client
       res.json(dbArticle);
     })
@@ -122,9 +124,9 @@ app.post("/articles/:id", function(req, res) {
   // Create a new note and pass the req.body to the entry
   db.Note.create(req.body)
     .then(function(dbNote) {
-      console.log('dbNote',dbNote)
-      console.log('req.body', req.body);
-      console.log('req.params',req.params)
+      // console.log('dbNote',dbNote)
+      // console.log('req.body', req.body);
+      // console.log('req.params',req.params)
       let query = {
         note: dbNote._id
       }

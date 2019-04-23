@@ -4,14 +4,24 @@ $(document).ready(function () {
   $.getJSON("/articles", function (data) {
     // For each one
     for (var i = 0; i < data.length; i++) {
+
+      let starClass = "";
+      if (data[i].starred) {
+        starClass = "fas fa-star star";
+      }
+      else {
+        starClass = "far fa-star star";
+      }
+      
       // Display the apropos information on the page
-      $("#articles").append("<p data-id='" + data[i]._id + "'><a href=" + data[i].link + ">" + data[i].title + '</a><i class="fas fa-comment-alt comment" data-target=modal' + data[i]._id + '></i><i class="far fa-star star"></i><br />' + "</p>");
+      $("#articles").append("<p data-id=" + data[i]._id + '><i class="fas fa-comment-alt comment" data-target=modal' + data[i]._id + '></i><i class="' + starClass + '"></i><a href=" + data[i].link + ">"' + data[i].title + '</a><br />' + "</p>");
     }
   });
 
   // When someone clicks the comment logo
   $(document).on("click", "i.comment", function () {
     var thisId = $(this).parent().attr("data-id");
+    // console.log("thisId",thisId);
 
     $.ajax({
       method: "GET",
@@ -19,7 +29,7 @@ $(document).ready(function () {
     })
       // With that done, add the note information to the page
       .then(function (data) {
-        // console.log(data);
+        // console.log("data",data);
         // The title of the article
         $(".modal-title").empty();
         $(".modal-body").empty();
@@ -49,33 +59,32 @@ $(document).ready(function () {
 
   // When someone clicks the star logo
   $(document).on("click", "i.star", function () {
-
-  // change class to change the font-awesome logo for starring/un-starring articles
-    let thisClass = $(this).attr("class");
-    if (thisClass === "fas fa-star star") {
-      // if (data.starred) {
-      $(this).attr("class", "far fa-star star");
-    }
-    else {
-      $(this).attr("class", "fas fa-star star");
-    }
-
     var thisId = $(this).parent().attr("data-id");
-    // console.log('thisId',thisId);
-
-    // Run a POST request to change the note, using what's entered in the inputs
+    
     $.ajax({
-      method: "POST",
-      url: "/articles/" + thisId,
-      data: {
-        starred: true
-      }
+      method: "GET",
+      url: "/articles/" + thisId
     })
-    // // With that done
-    .then(function(data) {
-      // Log the response
-      // console.log(data);
-    });
+      .then((data) => {
+        data.starred = !data.starred;
+        if (!data.starred) {
+          $(this).attr("class", "far fa-star star");
+        }
+        else {
+          $(this).attr("class", "fas fa-star star");
+        }
+
+        // console.log(data);
+        // Run a POST request to change starred property
+        $.ajax({
+          method: "POST",
+          url: "/articles/" + thisId,
+          data: {
+            starred: data.starred
+          }
+        })
+      })
+
   });
 
   // When you click the savenote button
