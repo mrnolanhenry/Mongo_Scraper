@@ -15,9 +15,12 @@ h3 {
   text-decoration: underline;
 }
 
-.fas-comment-alt,
-.comment {
+.fa-comment-alt,
+.comment,
+.fa-star, 
+.star {
   margin-left: 5px !important;
+  margin-right: 5px !important;
   color: lightseagreen !important;
 }
 
