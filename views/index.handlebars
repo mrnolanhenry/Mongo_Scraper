@@ -1,0 +1,46 @@
+<div class="container-fluid">
+
+    <div class="row-center">
+        <h3>Eat A Burger!</h3>
+        <img src="/assets/img/burger.png" class="img burger" />
+    </div>
+
+    <div class="row">
+        
+            <div class="col-6 col-plate">
+                <div class="container-fluid">
+                <h4>Burgers on your plate!</h4>
+
+                <ul>
+                    {{#each burger}}
+                    {{#unless this.devoured}}
+                    {{> burgers/burger-block devoured=false}}
+                    {{/unless}}
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+
+            <div class="col-6 col-stomach">
+                <div class="container-fluid">
+                <h4>Burgers in your belly!</h4>
+
+                <ul>
+                    {{#each burger}}
+                    {{#if this.devoured}}
+                    {{> burgers/burger-block devoured=true}}
+                    {{/if}}
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <form action="/api/burgers" method="POST">
+            <textarea type="text" id="submitField" name="burger" placeholder="Enter the name of a burger you'd like to eat and hit 'Submit'"></textarea>
+            <br>
+            <button type="submit" id="submitBtn">Submit</button>
+        </form>
+    </div>
+</div>
