@@ -3,6 +3,10 @@ body {
   /* font-family: 'Times New Roman', Times, serif !important; */
  }
 
+ a {
+   color: black;
+ }
+
 div {
   border: 1px black solid;
 }
@@ -27,6 +31,15 @@ h3 {
 #header {
   background-color: lightseagreen;
   color: white;
+  padding: 10px;
+}
+
+#scrapearticles {
+  margin-left: 5px !important;
+  background-color: white !important;
+  color: lightseagreen !important;
+  padding: 5px;
+  border: none;
 }
 
 #articles {
