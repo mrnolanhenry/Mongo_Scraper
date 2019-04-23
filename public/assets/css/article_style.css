@@ -1,10 +1,34 @@
-body { background-color: #F2F6D0 }
-#wrapper {
+body { 
+  background-color: #F2F6D0;
+  /* font-family: 'Times New Roman', Times, serif !important; */
+ }
+
+div {
+  border: 1px black solid;
+}
+
+h3 {
+  text-decoration: underline;
+}
+
+.fas-comment-alt,
+.comment {
+  margin-left: 5px !important;
+  color: lightseagreen !important;
+}
+
+/* #wrapper {
   width: 960px;
   margin-left: auto;
   margin-right: auto;
   padding-top: 5%;
+} */
+
+#header {
+  background-color: lightseagreen;
+  color: white;
 }
+
 #articles {
   display: inline-block;
   overflow: auto;
