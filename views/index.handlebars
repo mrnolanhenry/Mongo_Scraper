@@ -5,7 +5,7 @@
         <div id="articles">
             {{#each Article}}
 
-            <p data-id="{{this._id}}"><i class="far fa-comment-alt comment" data-target="modal{{this._id}}"></i>
+            <p data-ids='{ "article": "{{this._id}}" , "note": "{{this.note._id}}" }'><i class="far fa-comment-alt comment" data-target="modal{{this._id}}"></i>
 
                 {{#if this.starred}}
 

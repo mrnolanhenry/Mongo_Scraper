@@ -155,6 +155,29 @@ router.post("/articles/:id", (req, res) => {
         });
 });
 
+router.post('/articles/new/:id', (req, res) => {
+    let newNote = new Note(req.body);
+    newNote.save(function(err, doc) {
+        if (err) {
+            console.log(err);
+            res.status(500);
+        } else {
+            Article.findOneAndUpdate(
+                { _id: req.params.id },
+                { $push: { 'notes': doc.id } },
+                function(error, newDoc) {
+                    if (error) {
+                        console.log(error);
+                        res.status(500);
+                    } else {
+                        res.redirect('/saved');
+                    }
+                }
+            );
+        }
+    });
+});
+
 module.exports = router;
 
 
