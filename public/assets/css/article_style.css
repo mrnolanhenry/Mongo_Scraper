@@ -48,8 +48,8 @@ h3 {
 #articles {
   display: inline-block;
   overflow: auto;
-  /* width: 60%;
-  height: 700px; */
+  width: 60%;
+  height: 660px;
 }
 
 textarea, input {
