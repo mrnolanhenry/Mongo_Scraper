@@ -1,22 +1,14 @@
 $(document).ready(function () {
 
   // Grab the articles as a json
-  $.getJSON("/articles", function (data) {
-    // For each one
-    for (var i = 0; i < data.length; i++) {
+  // $.getJSON("/articles", function (data) {
+  //   res.render('index',{Article: data})
+  // });
 
-      let starClass = "";
-      if (data[i].starred) {
-        starClass = "fas fa-star star";
-      }
-      else {
-        starClass = "far fa-star star";
-      }
-      
-      // Display the apropos information on the page
-      $("#articles").append("<p data-id=" + data[i]._id + '><i class="fas fa-comment-alt comment" data-target=modal' + data[i]._id + '></i><i class="' + starClass + '"></i><a href="' + data[i].link + '">"' + data[i].title + '</a><br />' + "</p>");
-    }
-  });
+  // // Grab starred articles as a JSON
+  // $.getJSON("/articles/starred", function (data) {
+
+  // });
 
   // When someone clicks the comment logo
   $(document).on("click", "i.comment", function () {
@@ -104,11 +96,6 @@ $(document).ready(function () {
         body: $("#bodyinput").val()
       }
     })
-    // // With that done
-    // .then(function(data) {
-    //   // Log the response
-    //   console.log(data);
-    // });
   });
 
 });
