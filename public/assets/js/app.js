@@ -36,15 +36,9 @@ $(document).ready(function () {
         $(".modal-body").append("<textarea id='bodyinput' name='body'></textarea>");
 
         // A button to submit a new note, with the id of the article saved to it
-        $(".modal-footer").append("<button type='button' class='btn btn-primary' data-id='" + data._id + "' id='savenote' data-dismiss='modal'>Save Note</button>");
+        $(".modal-footer").append("<button type='button' class='btn btn-primary' data-id='" + data._id + "' id='savenote' data-dismiss='modal'>Add Note</button>");
         
         $(".modal-footer").append('<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>')
-
-        // If there's a note in the article
-        if (data.notes) {
-          // Place the body of the note in the body textarea
-          // $("#bodyinput").val(data.notes.body);
-        }
       });
 
     $("#modal").modal("show");
@@ -107,16 +101,22 @@ $(document).ready(function () {
     var thisId = $(this).data("id");
     // console.log('thisId',thisId);
 
-    // Run a DELETE request to change the note, using what's entered in the inputs
+
+    // Run a DELETE request to change the note
     $.ajax({
       method: "DELETE",
-      url: "/notes/" + thisId,
-      data: {
-        // Value taken from title input
-        title: $("#titleinput").val(),
-        // Value taken from note textarea
-        body: $("#bodyinput").val()
-      }
+      url: "/notes/" + thisId
+    })
+    .then(() => {
+      $(this).parent().empty();
+      // Run a POST request to change starred property
+      // $.ajax({
+      //   method: "POST",
+      //   url: "/star/" + thisId,
+      //   data: {
+      //     starred: data.starred
+      //   }
+      // })
     })
   });
 
