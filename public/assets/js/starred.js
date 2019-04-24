@@ -14,8 +14,8 @@ $(document).ready(function () {
         }
         
         // Display the apropos information on the page
-        $("#articles").append("<p data-id=" + data[i]._id + '><i class="fas fa-comment-alt comment" data-target=modal' + data[i]._id + '></i><i class="fas fa-star star"></i><a href=" + data[i].link + ">"' + data[i].title + '</a><br />' + "</p>");
-      }
+        $("#articles").append("<p data-id=" + data[i]._id + '><i class="fas fa-comment-alt comment" data-target=modal' + data[i]._id + '></i><i class="' + starClass + '"></i><a href="' + data[i].link + '">"' + data[i].title + '</a><br />' + "</p>");
+    }
     });
   
     // When someone clicks the comment logo
