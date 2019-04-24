@@ -28,14 +28,16 @@ $(document).ready(function () {
         $(".modal-footer").empty();
         $(".modal-title").append("<h2>" + data.title + "</h2>");
 
+        console.log("data.notes",data.notes);
         for (var i = 0; i < data.notes.length; i++) {
-          $(".modal-body").append("<p data-id=" + data.notes[i]._id + "></textarea>");
+          $(".modal-body").append("<p data-id=" + data.notes[i]._id + ">" + data.notes[i].body +"<button type='button' class='btn btn-danger' data-id='" + data.notes[i]._id + "' id='deletenote'>X</button></p>");
         }
         // A textarea to add a new note body
         $(".modal-body").append("<textarea id='bodyinput' name='body'></textarea>");
 
         // A button to submit a new note, with the id of the article saved to it
         $(".modal-footer").append("<button type='button' class='btn btn-primary' data-id='" + data._id + "' id='savenote' data-dismiss='modal'>Save Note</button>");
+        
         $(".modal-footer").append('<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>')
 
         // If there's a note in the article
@@ -67,7 +69,6 @@ $(document).ready(function () {
           $(this).attr("class", "fas fa-star star");
         }
 
-        // console.log(data);
         // Run a POST request to change starred property
         $.ajax({
           method: "POST",

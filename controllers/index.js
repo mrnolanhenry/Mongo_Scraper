@@ -159,11 +159,28 @@ router.post("/star/:id", (req, res) => {
     });
 });
 
-// Route for grabbing a specific Article by id, populate it with it's note
+// Route for grabbing a specific Note by id, populate it with it's note
 router.get("/notes/:id", (req, res) => {
     // console.log("req.params.id",req.params.id);
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our ..
     Note.findOne({ _id: req.params.id })
+        // ..and populate all of the notes associated with it
+        .then(function (dbNote) {
+            // console.log("dbNote",dbNote);
+            // If we were able to successfully find an Article with the given id, send it back to the client
+            res.json(dbNote);
+        })
+        .catch(function (err) {
+            // If an error occurred, send it to the client
+            res.json(err);
+        });
+});
+
+// Route for grabbing a specific Article by id, populate it with it's note
+router.delete("/notes/:id", (req, res) => {
+    // console.log("req.params.id",req.params.id);
+    // Using the id passed in the id parameter, prepare a query that finds the matching one in our ..
+    Note.deleteOne({ _id: req.params.id })
         // ..and populate all of the notes associated with it
         .then(function (dbNote) {
             // console.log("dbNote",dbNote);
