@@ -33,7 +33,9 @@ app.set('view engine', 'handlebars');
 app.use(require('./controllers'));
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/scraperhw", { useNewUrlParser: true });
+mongoose.Promise = Promise;
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scraperhw";
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 const db = mongoose.connection;
 
