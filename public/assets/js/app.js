@@ -12,7 +12,7 @@ $(document).ready(function () {
 
   // When someone clicks the comment logo
   $(document).on("click", "i.comment", function () {
-    var thisId = $(this).parent().data("ids").article;
+    var thisId = $(this).parent().data("id");
     // console.log("thisId",thisId);
 
     $.ajax({
@@ -27,8 +27,10 @@ $(document).ready(function () {
         $(".modal-body").empty();
         $(".modal-footer").empty();
         $(".modal-title").append("<h2>" + data.title + "</h2>");
-        // An input to enter a new title
-        $(".modal-body").append("<input id='titleinput' name='title' >");
+
+        for (var i = 0; i < data.notes.length; i++) {
+          $(".modal-body").append("<p data-id=" + data.notes[i]._id + "></textarea>");
+        }
         // A textarea to add a new note body
         $(".modal-body").append("<textarea id='bodyinput' name='body'></textarea>");
 
@@ -37,11 +39,9 @@ $(document).ready(function () {
         $(".modal-footer").append('<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>')
 
         // If there's a note in the article
-        if (data.note) {
-          // Place the title of the note in the title input
-          $("#titleinput").val(data.note.title);
+        if (data.notes) {
           // Place the body of the note in the body textarea
-          $("#bodyinput").val(data.note.body);
+          // $("#bodyinput").val(data.notes.body);
         }
       });
 
@@ -51,9 +51,9 @@ $(document).ready(function () {
 
   // When someone clicks the star logo
   $(document).on("click", "i.star", function () {
-    var thisId = $(this).parent().data("ids").article;
+    var thisId = $(this).parent().data("id");
     // console.log("thisId",thisId);
-    
+
     $.ajax({
       method: "GET",
       url: "/articles/" + thisId
@@ -71,7 +71,7 @@ $(document).ready(function () {
         // Run a POST request to change starred property
         $.ajax({
           method: "POST",
-          url: "/articles/" + thisId,
+          url: "/star/" + thisId,
           data: {
             starred: data.starred
           }
@@ -83,7 +83,7 @@ $(document).ready(function () {
   // When you click the savenote button
   $(document).on("click", "#savenote", function () {
     // Grab the id associated with the article from the submit button
-    var thisId = $(this).data("ids").article;
+    var thisId = $(this).data("id");
     // console.log('thisId',thisId);
 
     // Run a POST request to change the note, using what's entered in the inputs
@@ -100,23 +100,23 @@ $(document).ready(function () {
   });
 
 
-    // When you click the updatenote button
-    $(document).on("click", "#updatenote", function () {
-      // Grab the id associated with the article from the submit button
-      var thisId = $(this).data("ids").article;
-      // console.log('thisId',thisId);
-  
-      // Run a POST request to change the note, using what's entered in the inputs
-      $.ajax({
-        method: "POST",
-        url: "/articles/" + thisId,
-        data: {
-          // Value taken from title input
-          title: $("#titleinput").val(),
-          // Value taken from note textarea
-          body: $("#bodyinput").val()
-        }
-      })
-    });
+  // When you click the deletenote button
+  $(document).on("click", "#deletenote", function () {
+    // Grab the id associated with the article from the submit button
+    var thisId = $(this).data("id");
+    // console.log('thisId',thisId);
+
+    // Run a DELETE request to change the note, using what's entered in the inputs
+    $.ajax({
+      method: "DELETE",
+      url: "/notes/" + thisId,
+      data: {
+        // Value taken from title input
+        title: $("#titleinput").val(),
+        // Value taken from note textarea
+        body: $("#bodyinput").val()
+      }
+    })
+  });
 
 });
