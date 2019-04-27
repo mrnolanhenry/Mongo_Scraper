@@ -3,16 +3,32 @@ body {
   /* font-family: 'Times New Roman', Times, serif !important; */
  }
 
+
  a {
-   color: black;
+   color: lightseagreen !important;
+   transition: color .5s;
  }
 
-div {
+ a:hover,
+ a:focus,
+ a:target {
+  color: rgb(89, 104, 98) !important;
+ }
+
+/* div {
   border: 1px black solid;
+} */
+
+h2 {
+  font-size: 1.5rem !important;
 }
 
 h3 {
   text-decoration: underline;
+}
+
+textarea {
+  height: 140px !important;
 }
 
 .fa-comment-alt,
@@ -24,26 +40,41 @@ h3 {
   color: lightseagreen !important;
 }
 
-/* #wrapper {
-  width: 960px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 5%;
-} */
+.col-header {
+  height: 100%;
+}
 
 a.nav {
-  color: white;
+  color: white !important;
+  transition: color .5s;
 }
+
+a.nav:hover,
+a.nav:focus,
+a.nav:target {
+ color: rgb(89, 104, 98) !important;
+}
+
 
 #header {
   background-color: lightseagreen;
   color: white;
   padding: 10px;
+  align-items:center;
 }
 
 #scrapearticles {
   margin-left: 5px !important;
   background-color: white !important;
+  color: lightseagreen !important;
+  padding: 5px;
+  border: none;
+}
+
+#scrapearticles:hover {
+  margin-left: 5px !important;
+  transition: background-color .5s;
+  background-color: rgb(89, 104, 98) !important;
   color: lightseagreen !important;
   padding: 5px;
   border: none;
@@ -67,4 +98,10 @@ input {
 textarea {
   height: 200px;
   font-size: 18px;
+}
+
+p.note {
+  display: flex;
+  justify-content: space-between;
+
 }
