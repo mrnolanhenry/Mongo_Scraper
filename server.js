@@ -9,9 +9,6 @@ const mongoose = require("mongoose");
 const axios = require("axios");
 const cheerio = require("cheerio");
 
-// Require all models
-// const db = require("./models");
-
 const PORT = process.env.PORT || 4000;
 
 // Initialize Express
@@ -38,8 +35,6 @@ const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scraperhw";
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 const db = mongoose.connection;
-
-// require("./controllers/article_controllers")(app);
 
 // Start the server
 app.listen(PORT, function() {

@@ -1,15 +1,5 @@
 $(document).ready(function () {
 
-  // Grab the articles as a json
-  // $.getJSON("/articles", function (data) {
-  //   res.render('index',{Article: data})
-  // });
-
-  // // Grab starred articles as a JSON
-  // $.getJSON("/articles/starred", function (data) {
-
-  // });
-
   // When someone clicks the comment logo
   $(document).on("click", "i.comment", function () {
     var thisId = $(this).parent().data("id");
@@ -73,7 +63,6 @@ $(document).ready(function () {
   $(document).on("click", "#savenote", function () {
     // Grab the id associated with the article from the submit button
     var thisId = $(this).data("id");
-    // console.log('thisId',thisId);
 
     // Run a POST request to change the note, using what's entered in the inputs
     $.ajax({
@@ -93,8 +82,6 @@ $(document).ready(function () {
   $(document).on("click", "#deletenote", function () {
     // Grab the id associated with the article from the submit button
     var thisId = $(this).data("id");
-    // console.log('thisId',thisId);
-
 
     // Run a DELETE request to change the note
     $.ajax({
@@ -103,14 +90,6 @@ $(document).ready(function () {
     })
     .then(() => {
       $(this).parent().empty();
-      // Run a POST request to change starred property
-      // $.ajax({
-      //   method: "POST",
-      //   url: "/star/" + thisId,
-      //   data: {
-      //     starred: data.starred
-      //   }
-      // })
     })
   });
 

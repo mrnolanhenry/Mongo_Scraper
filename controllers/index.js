@@ -2,21 +2,15 @@ const express = require('express');
 const router = express.Router();
 const Article = require('../models/Article');
 const Note = require('../models/Note');
-const app = express();
 const cheerio = require('cheerio');
 const axios = require('axios');
 
-
-//  ----------------------------------------------
 router.get("/", (req, res) => {
-    console.log('test-1');
-    // res.render("index", { Article: res });
-    Article.find({})
+    Article.find({}).limit(20).sort({ scrapedAt : -1 } )
         // ..and populate all of the notes associated with it
         .populate("notes")
         .then(function (dbArticle) {
             // If we were able to successfully find Articles, send them back to the client
-            // res.json(dbArticle);
             res.render("index", { Article: dbArticle });
         })
         .catch(function (err) {
@@ -27,7 +21,7 @@ router.get("/", (req, res) => {
 
 router.get("/starred", (req, res) => {
     // Grab every document in the Articles collection
-    Article.find({ starred: true })
+    Article.find({ starred: true }).sort({ scrapedAt : -1 } )
         // ..and populate all of the notes associated with it
         .populate("notes")
         .then(function (dbArticle) {
@@ -42,7 +36,6 @@ router.get("/starred", (req, res) => {
 
 // A GET route for scraping the website
 router.get("/scrape", (req, res) => {
-    console.log('test-2');
     // First, we grab the body of the html with axios
     axios.get("https://old.reddit.com/r/worldnews/").then(function (response) {
         // Then, we load that into cheerio and save it to $ for a shorthand selector
@@ -61,11 +54,11 @@ router.get("/scrape", (req, res) => {
                 .children("a")
                 .attr("href");
 
+            result.scrapedAt = Date.now();
+
             // Create a new Article using the `result` object built from scraping
             Article.create(result)
                 .then(function (dbArticle) {
-                    // View the added result in the console
-                    // console.log(dbArticle);
                 })
                 .catch(function (err) {
                     // If an error occurred, log it
@@ -110,13 +103,11 @@ router.get("/articles/starred", (req, res) => {
 
 // Route for grabbing a specific Article by id, populate it with it's note
 router.get("/articles/:id", (req, res) => {
-    // console.log("req.params.id",req.params.id);
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our ..
     Article.findOne({ _id: req.params.id })
         // ..and populate all of the notes associated with it
         .populate("notes")
         .then(function (dbArticle) {
-            // console.log("dbArticle",dbArticle);
             // If we were able to successfully find an Article with the given id, send it back to the client
             res.json(dbArticle);
         })
@@ -131,9 +122,6 @@ router.post("/articles/:id", (req, res) => {
     // Create a new note and pass the req.body to the entry
     Note.create(req.body)
         .then(function (dbNote) {
-            // console.log('dbNote',dbNote)
-            // console.log('req.body', req.body);
-            // console.log('req.params',req.params)
             return Article.findOneAndUpdate({ _id: req.params.id }, { $push:  {'notes': dbNote }}, { new: true });
         })
         .then(function (dbArticle) {
@@ -148,7 +136,6 @@ router.post("/articles/:id", (req, res) => {
 
 // Route for starring an Article
 router.post("/star/:id", (req, res) => {
-    console.log('firing')
     Article.findOneAndUpdate({ _id: req.params.id }, {'starred': req.body.starred }, { new: true })
     .then(function(dbArticle) {
         res.json(dbArticle);
@@ -161,12 +148,10 @@ router.post("/star/:id", (req, res) => {
 
 // Route for grabbing a specific Note by id, populate it with it's note
 router.get("/notes/:id", (req, res) => {
-    // console.log("req.params.id",req.params.id);
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our ..
     Note.findOne({ _id: req.params.id })
         // ..and populate all of the notes associated with it
         .then(function (dbNote) {
-            // console.log("dbNote",dbNote);
             // If we were able to successfully find an Article with the given id, send it back to the client
             res.json(dbNote);
         })
@@ -178,12 +163,10 @@ router.get("/notes/:id", (req, res) => {
 
 // Route for grabbing a specific Article by id, populate it with it's note
 router.delete("/notes/:id", (req, res) => {
-    // console.log("req.params.id",req.params.id);
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our ..
     Note.deleteOne({ _id: req.params.id })
         // ..and populate all of the notes associated with it
         .then(function (dbNote) {
-            // console.log("dbNote",dbNote);
             // If we were able to successfully find an Article with the given id, send it back to the client
             res.json(dbNote);
         })
@@ -193,32 +176,4 @@ router.delete("/notes/:id", (req, res) => {
         });
 });
 
-// router.post('/articles/new/:id', (req, res) => {
-//     let newNote = new Note(req.body);
-//     newNote.save(function(err, doc) {
-//         if (err) {
-//             console.log(err);
-//             res.status(500);
-//         } else {
-//             Article.findOneAndUpdate(
-//                 { _id: req.params.id },
-//                 { $push: { 'notes': doc.id } },
-//                 function(error, newDoc) {
-//                     if (error) {
-//                         console.log(error);
-//                         res.status(500);
-//                     } else {
-//                         res.redirect('/saved');
-//                     }
-//                 }
-//             );
-//         }
-//     });
-// });
-
 module.exports = router;
-
-
-
-// router.use('/apiRoutes', require('./apiRoutes'));
-// module.exports = router;
