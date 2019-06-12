@@ -30,6 +30,7 @@ Finally, navigate to localhost:4000 in your browser.
 
 ## Built With
 * [Node](https://nodejs.org/en/) - Backend JS
+* [Bootstrap](https://getbootstrap.com/) - Front-End Library
 * [Cheerio](https://cheerio.js.org/) - Web Scraping
 * [Express](https://expressjs.com/) - Web App Framework
 * [Express-Handlebars](https://github.com/wycats/handlebars.js) - Handlebars view engine for Express
