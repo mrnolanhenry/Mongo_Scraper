@@ -35,3 +35,8 @@ Finally, navigate to localhost:4000 in your browser.
 * [Express-Handlebars](https://github.com/wycats/handlebars.js) - Handlebars view engine for Express
 * [Mongoose](https://mongoosejs.com/) - Database
 
+## Potential Updates
+* User Authentication
+* Redesign Comment interface. 
+  * Include routing to a page with more information regarding the date/author of the comment
+  * Enable replies to comments
